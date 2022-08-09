@@ -9,8 +9,7 @@ fn main() {
     let client = RpcClient::new("http://api.mainnet-beta.solana.com");
     let mut price_account = client.get_account(&price_key).unwrap();
 
-    let price_feed =
-        load_price_feed_from_account(&price_key, &mut price_account).unwrap();
+    let price_feed = load_price_feed_from_account(&price_key, &mut price_account).unwrap();
     let price = price_feed.get_current_price().unwrap();
 
     println!("ETH/USD price");
