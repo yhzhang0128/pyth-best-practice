@@ -8,9 +8,9 @@ fn main() {
     let key = Pubkey::from_str("JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB").unwrap();
     let client = RpcClient::new("http://api.mainnet-beta.solana.com");
 
-    let mut price_account = client.get_account(&key).unwrap();
-    let price_feed = load_price_feed_from_account(&price_key, &mut price_account).unwrap();
-    let price = price_feed.get_current_price().unwrap();
+    let mut account = client.get_account(&key).unwrap();
+    let feed = load_price_feed_from_account(&key, &mut account).unwrap();
+    let price = feed.get_current_price().unwrap();
 
     println!("ETH/USD price");
     println!("status: \t{:?}", price_feed.status);
