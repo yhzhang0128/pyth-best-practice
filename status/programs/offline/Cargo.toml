@@ -1,0 +1,10 @@
+[package]
+name = "pyth-best-practice-offline"
+version = "0.1.0"
+description = "Best-practice of Pyth, the offline version"
+edition = "2021"
+
+[dependencies]
+pyth-sdk-solana = "0.4.1"
+solana-client = "1.8.1, < 1.11"
+solana-program = "1.8.1, < 1.11.5"
