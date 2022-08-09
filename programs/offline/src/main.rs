@@ -13,8 +13,8 @@ fn main() {
     let price = feed.get_current_price().unwrap();
 
     println!("ETH/USD price");
-    println!("status: \t{:?}", price_feed.status);
-    println!("#publishers: \t{}", price_feed.num_publishers);
+    println!("status: \t{:?}", feed.status);
+    println!("#publishers: \t{}", feed.num_publishers);
     println!("========================");
 
     println!("exponent: \t{}", price.expo);
