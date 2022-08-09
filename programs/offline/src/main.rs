@@ -5,10 +5,10 @@ use pyth_sdk_solana::{load_price_feed_from_account};
 
 fn main() {
     // The ETH/USD price key can be found at https://pyth.network/price-feeds/crypto-eth-usd
-    let price_key = Pubkey::from_str("JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB").unwrap();
+    let key = Pubkey::from_str("JBu1AL4obBcCMqKBBxhpWCNUt136ijcuMZLFvTP7iWdB").unwrap();
     let client = RpcClient::new("http://api.mainnet-beta.solana.com");
-    let mut price_account = client.get_account(&price_key).unwrap();
 
+    let mut price_account = client.get_account(&key).unwrap();
     let price_feed = load_price_feed_from_account(&price_key, &mut price_account).unwrap();
     let price = price_feed.get_current_price().unwrap();
 
