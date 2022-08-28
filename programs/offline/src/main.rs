@@ -10,17 +10,17 @@ fn main() {
 
     let mut account = client.get_account(&key).unwrap();
     let feed = load_price_feed_from_account(&key, &mut account).unwrap();
-    let price = feed.get_current_price().unwrap();
+    let result = feed.get_current_price().unwrap();
 
     println!("ETH/USD price");
     println!("status: \t{:?}", feed.status);
     println!("#publishers: \t{}", feed.num_publishers);
     println!("========================");
 
-    println!("exponent: \t{}", price.expo);
-    println!("conf: \t\t{}", price.conf);
-    println!("price: \t\t{}", price.price);
-    let actual_conf = (price.conf as f64) * (10 as f64).powf(price.expo as f64);
-    let actual_price = (price.price as f64) * (10 as f64).powf(price.expo as f64);
-    println!("combined: \t{} * 10^({}) = ${} +- ${}", price.price, price.expo, actual_price, actual_conf);
+    println!("exponent: \t{}", result.expo);
+    println!("conf: \t\t{}", result.conf);
+    println!("price: \t\t{}", result.price);
+    let actual_conf = (result.conf as f64) * (10 as f64).powf(result.expo as f64);
+    let actual_price = (result.price as f64) * (10 as f64).powf(result.expo as f64);
+    println!("combined: \t{} * 10^({}) = ${} +- ${}", result.price, result.expo, actual_price, actual_conf);
 }
