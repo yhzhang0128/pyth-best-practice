@@ -17,10 +17,7 @@ use solana_program::instruction::Instruction;
 
 #[derive(Clone, Debug, BorshSerialize, BorshDeserialize, PartialEq)]
 pub enum PythClientInstruction {
-    Loan2Value {
-        loan:  u64,
-        value: u64,
-    },
+    Loan2Value {},
     PriceStatusCheck {
         // A Price serialized as a vector of bytes.
         // This field is stored as a vector of bytes
@@ -35,10 +32,7 @@ pub fn loan_to_value() -> Instruction {
     Instruction {
         program_id: id(),
         accounts:   vec![],
-        data:       PythClientInstruction::Loan2Value {
-            loan:  1,
-            value: 2,
-        }
+        data:       PythClientInstruction::Loan2Value {}
         .try_to_vec()
         .unwrap(),
     }
