@@ -36,7 +36,7 @@ pub fn process_instruction(
                 "gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s"
             ).unwrap();
             // https://docs.rs/solana-program/1.5.1/solana_program/account_info/struct.AccountInfo.html
-            msg!("Construct account info");
+            msg!("Constructing account info");
             let account = AccountInfo::new(
                 &key,
                 false,          // is_signer
@@ -48,11 +48,11 @@ pub fn process_instruction(
                 366,            // offline
             );
             msg!("Calling Pyth");
-            let feed = load_price_feed_from_account_info(&account).unwrap();
-            let result = feed.get_current_price().unwrap();
-            msg!("exponent: \t{}", result.expo);
-            msg!("conf: \t\t{}", result.conf);
-            msg!("price: \t\t{}", result.price);
+            // let feed = load_price_feed_from_account_info(&account).unwrap();
+            // let result = feed.get_current_price().unwrap();
+            // msg!("exponent: \t{}", result.expo);
+            // msg!("conf: \t\t{}", result.conf);
+            // msg!("price: \t\t{}", result.price);
 
             let loan = 1;
             let value = 2;
