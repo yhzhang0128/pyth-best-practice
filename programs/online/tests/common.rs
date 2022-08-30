@@ -14,7 +14,9 @@ pub async fn test_instr_exec_ok(instr: Instruction) {
     context.warp_to_slot(1000).unwrap();
 
     let mut transaction = Transaction::new_with_payer(&[instr], Some(&context.payer.pubkey()));
+
     transaction.sign(&[&context.payer], context.last_blockhash);
+
     context
         .banks_client
         .process_transaction(transaction)
