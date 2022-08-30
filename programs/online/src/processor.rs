@@ -11,9 +11,10 @@ use borsh::BorshDeserialize;
 use crate::instruction::PythClientInstruction;
 use pyth_sdk_solana::state::load_price_account;
 
-//use std::str::FromStr;
-//use solana_program::pubkey::Pubkey;
-//use pyth_sdk_solana::{load_price_feed_from_account_info, PriceFeed};
+use std::mem;
+use std::str::FromStr;
+use solana_program::clock::Epoch;
+use pyth_sdk_solana::load_price_feed_from_account_info;
 
 pub fn process_instruction(
     _program_id: &Pubkey,
@@ -27,10 +28,27 @@ pub fn process_instruction(
 
             // The ETH/USD price key on devnet
             // https://pyth.network/price-feeds/crypto-eth-usd/?cluster=devnet
-            // let key = Pubkey::from_str(
-            //     "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw"
-            // ).unwrap();
-            // TODO: get the price of ETH/USD from Pyth
+            let key = Pubkey::from_str(
+                "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw"
+            ).unwrap();
+            let mut lamports = 0;
+            let mut data = vec![0; mem::size_of::<u32>()];
+            let owner = Pubkey::default();
+            let account = AccountInfo::new(
+                &key,
+                false,
+                true,
+                &mut lamports,
+                &mut data,
+                &owner,
+                false,
+                Epoch::default(),
+            );
+            // let feed = load_price_feed_from_account_info(&account).unwrap();
+            // let result = feed.get_current_price().unwrap();
+            // msg!("exponent: \t{}", result.expo);
+            // msg!("conf: \t\t{}", result.conf);
+            // msg!("price: \t\t{}", result.price);
 
             let loan = 1;
             let value = 2;
