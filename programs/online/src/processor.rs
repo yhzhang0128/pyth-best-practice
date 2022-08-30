@@ -13,7 +13,6 @@ use pyth_sdk_solana::state::load_price_account;
 
 use std::mem;
 use std::str::FromStr;
-use solana_program::clock::Epoch;
 use pyth_sdk_solana::load_price_feed_from_account_info;
 
 pub fn process_instruction(
@@ -28,27 +27,32 @@ pub fn process_instruction(
 
             // The ETH/USD price key on devnet
             // https://pyth.network/price-feeds/crypto-eth-usd/?cluster=devnet
+            let mut lamports = 2;
+            let mut data = vec![0; mem::size_of::<u32>()];
             let key = Pubkey::from_str(
                 "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw"
             ).unwrap();
-            let mut lamports = 0;
-            let mut data = vec![0; mem::size_of::<u32>()];
-            let owner = Pubkey::default();
+            let owner = Pubkey::from_str(
+                "gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s"
+            ).unwrap();
+            // https://docs.rs/solana-program/1.5.1/solana_program/account_info/struct.AccountInfo.html
+            msg!("Construct account info");
             let account = AccountInfo::new(
                 &key,
-                false,
-                true,
+                false,          // is_signer
+                false,          // is_writable
                 &mut lamports,
                 &mut data,
                 &owner,
-                false,
-                Epoch::default(),
+                false,          // executable
+                366,            // offline
             );
-            // let feed = load_price_feed_from_account_info(&account).unwrap();
-            // let result = feed.get_current_price().unwrap();
-            // msg!("exponent: \t{}", result.expo);
-            // msg!("conf: \t\t{}", result.conf);
-            // msg!("price: \t\t{}", result.price);
+            msg!("Calling Pyth");
+            let feed = load_price_feed_from_account_info(&account).unwrap();
+            let result = feed.get_current_price().unwrap();
+            msg!("exponent: \t{}", result.expo);
+            msg!("conf: \t\t{}", result.conf);
+            msg!("price: \t\t{}", result.price);
 
             let loan = 1;
             let value = 2;
