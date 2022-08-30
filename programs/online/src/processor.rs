@@ -1,4 +1,5 @@
-//! Program instruction processor for end-to-end testing and instruction counts
+//! Program instruction processor
+/// PriceStatusCheck comes from the official pyth-sdk-rs
 
 use borsh::BorshDeserialize;
 use solana_program::account_info::AccountInfo;
