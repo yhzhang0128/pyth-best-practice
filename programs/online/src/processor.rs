@@ -17,6 +17,16 @@ pub fn process_instruction(
 ) -> ProgramResult {
     let instruction = PythClientInstruction::try_from_slice(input).unwrap();
     match instruction {
+        PythClientInstruction::Loan2Value {
+            loan,
+            value,
+        } => {
+            if value > loan {
+                Ok(())
+            } else {
+                Err(ProgramError::Custom(0))
+            }
+        },
         PythClientInstruction::PriceStatusCheck {
             price_account_data,
             expected_price_status,
