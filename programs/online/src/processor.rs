@@ -22,27 +22,25 @@ pub fn process_instruction(
         PythClientInstruction::Loan2Value {} => {
             // Suppose we have 1 loan token and 3000 collateral token
             let loan_cnt = 1;
-            let loan_value = 0;
             let collateral_cnt = 3000;
-            let collateral_value = 1;
             
             msg!("Calling Loan2Value(), input: {} bytes", input.len());
 
             let loan = &_accounts[0];
             msg!("The loan key: {}", loan.key);
             // "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw"
-            // let feed = load_price_feed_from_account_info(&loan).unwrap();
-            // let result = feed.get_current_price().unwrap();
-            // loan_value = result.price * loan_cnt;
-            // msg!("loan unit price: \t\t{}", result.price);
+            let feed = load_price_feed_from_account_info(&loan).unwrap();
+            let result = feed.get_current_price().unwrap();
+            let loan_value = result.price * loan_cnt;
+            msg!("loan unit price: \t\t{}", result.price);
 
             let collateral = &_accounts[1];
             msg!("The collateral key: {}", collateral.key);
             // "5SSkXsEKQepHHAewytPVwdej4epN1nxgLVM84L4KXgy"
-            // let feed = load_price_feed_from_account_info(&collateral).unwrap();
-            // let result = feed.get_current_price().unwrap();
-            // collateral_value = result.price * collateral_cnt;
-            // msg!("collateral unit price: \t\t{}", result.price);
+            let feed = load_price_feed_from_account_info(&collateral).unwrap();
+            let result = feed.get_current_price().unwrap();
+            let collateral_value = result.price * collateral_cnt;
+            msg!("collateral unit price: \t\t{}", result.price);
 
             if collateral_value > loan_value {
                 Ok(())
