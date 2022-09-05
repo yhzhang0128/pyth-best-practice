@@ -1,6 +1,5 @@
 all:
 	echo "Usage: make [offline | online | deploy | invoke] "
-
 offline:
 	cargo run offline
 online:
