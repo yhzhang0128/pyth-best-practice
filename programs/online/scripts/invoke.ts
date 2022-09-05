@@ -26,7 +26,6 @@ export const invoke = async (loan: string, collateral: string) => {
             u8('instruction'),
         ])
     };
-    console.log("data size:" + allocateStruct.layout.span);
     let data = Buffer.alloc(allocateStruct.layout.span);
     let layoutFields = Object.assign({instruction: allocateStruct.index});
     allocateStruct.layout.encode(layoutFields, data);
@@ -42,7 +41,7 @@ export const invoke = async (loan: string, collateral: string) => {
     }));
 
     let txSig = await web3.sendAndConfirmTransaction(conn, tx, [payer, keypair]);
-    console.log(txSig);
+    console.log("TxHash: " + txSig);
 }
 
 let eth = "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw";
