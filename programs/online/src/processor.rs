@@ -10,9 +10,6 @@ use solana_program::program_error::ProgramError;
 use borsh::BorshDeserialize;
 use crate::instruction::PythClientInstruction;
 use pyth_sdk_solana::state::load_price_account;
-
-use std::mem;
-use std::str::FromStr;
 use pyth_sdk_solana::load_price_feed_from_account_info;
 
 pub fn process_instruction(
@@ -23,41 +20,31 @@ pub fn process_instruction(
     let instruction = PythClientInstruction::try_from_slice(input).unwrap();
     match instruction {
         PythClientInstruction::Loan2Value {} => {
-            msg!("Calling Loan2Value()");
+            // Suppose we have 1 loan token and 3000 collateral token
+            let loan_cnt = 1;
+            let loan_value = 0;
+            let collateral_cnt = 3000;
+            let collateral_value = 1;
+            
+            msg!("Calling Loan2Value(), input: {} bytes", input.len());
 
-            // The ETH/USD price key on devnet
-            // https://pyth.network/price-feeds/crypto-eth-usd/?cluster=devnet
-            let mut lamports = 2;
-            let mut data = vec![0; mem::size_of::<u32>()];
-            let key = Pubkey::from_str(
-                "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw"
-            ).unwrap();
-            let owner = Pubkey::from_str(
-                "gSbePebfvPy7tRqimPoVecS2UsBvYv46ynrzWocc92s"
-            ).unwrap();
-            // https://docs.rs/solana-program/1.5.1/solana_program/account_info/struct.AccountInfo.html
-            msg!("Constructing account info");
-            let account = AccountInfo::new(
-                &key,
-                false,          // is_signer
-                false,          // is_writable
-                &mut lamports,
-                &mut data,
-                &owner,
-                false,          // executable
-                366,            // offline
-            );
-            msg!("Calling Pyth");
-            // let feed = load_price_feed_from_account_info(&account).unwrap();
+            let loan = &_accounts[0];
+            msg!("The loan key: {}", loan.key);
+            // "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw"
+            // let feed = load_price_feed_from_account_info(&loan).unwrap();
             // let result = feed.get_current_price().unwrap();
-            // msg!("exponent: \t{}", result.expo);
-            // msg!("conf: \t\t{}", result.conf);
-            // msg!("price: \t\t{}", result.price);
+            // loan_value = result.price * loan_cnt;
+            // msg!("loan unit price: \t\t{}", result.price);
 
-            let loan = 1;
-            let value = 2;
+            let collateral = &_accounts[1];
+            msg!("The collateral key: {}", collateral.key);
+            // "5SSkXsEKQepHHAewytPVwdej4epN1nxgLVM84L4KXgy"
+            // let feed = load_price_feed_from_account_info(&collateral).unwrap();
+            // let result = feed.get_current_price().unwrap();
+            // collateral_value = result.price * collateral_cnt;
+            // msg!("collateral unit price: \t\t{}", result.price);
 
-            if value > loan {
+            if collateral_value > loan_value {
                 Ok(())
             } else {
                 Err(ProgramError::Custom(0))
