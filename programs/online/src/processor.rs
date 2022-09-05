@@ -24,23 +24,19 @@ pub fn process_instruction(
             let loan_cnt = 1;
             let collateral_cnt = 3000;
             
-            msg!("Calling Loan2Value(), input: {} bytes", input.len());
-
             let loan = &_accounts[0];
             msg!("The loan key: {}", loan.key);
-            // "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw"
-            let feed = load_price_feed_from_account_info(&loan).unwrap();
-            let result = feed.get_current_price().unwrap();
-            let loan_value = result.price * loan_cnt;
-            msg!("loan unit price: \t\t{}", result.price);
+            let feed1 = load_price_feed_from_account_info(&loan).unwrap();
+            let result1 = feed1.get_current_price().unwrap();
+            let loan_value = result1.price * loan_cnt;
+            msg!("loan unit price: {}", result1.price);
 
             let collateral = &_accounts[1];
             msg!("The collateral key: {}", collateral.key);
-            // "5SSkXsEKQepHHAewytPVwdej4epN1nxgLVM84L4KXgy"
-            let feed = load_price_feed_from_account_info(&collateral).unwrap();
-            let result = feed.get_current_price().unwrap();
-            let collateral_value = result.price * collateral_cnt;
-            msg!("collateral unit price: \t\t{}", result.price);
+            let feed2 = load_price_feed_from_account_info(&collateral).unwrap();
+            let result2 = feed2.get_current_price().unwrap();
+            let collateral_value = result2.price * collateral_cnt;
+            msg!("collateral unit price: {}", result2.price);
 
             if collateral_value > loan_value {
                 Ok(())
