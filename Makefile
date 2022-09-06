@@ -8,4 +8,4 @@ online:
 deploy:
 	solana program deploy --program-id target/deploy/pyth_best_practice_online-keypair.json target/deploy/pyth_best_practice_online.so
 invoke:
-	cd programs/online/scripts; npm run build; echo invoking transaction...; node invoke.js
+	cd programs/online/scripts; npm run build; node invoke.js

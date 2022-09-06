@@ -3,6 +3,7 @@ const web3 = require("@solana/web3.js");
 
 export const invoke = async (loan: string, collateral: string) => {
     /* Airdrop */
+    console.log("Airdroping...");
     let keypair = web3.Keypair.generate();
     let payer = web3.Keypair.generate();
     let conn = new web3.Connection(web3.clusterApiUrl('devnet'));
@@ -31,6 +32,7 @@ export const invoke = async (loan: string, collateral: string) => {
     allocateStruct.layout.encode(layoutFields, data);
     
     /* Invoke transaction */
+    console.log("Invoking transaction...");
     let tx = new web3.Transaction({
         feePayer: payer.publicKey
     });
@@ -41,7 +43,7 @@ export const invoke = async (loan: string, collateral: string) => {
     }));
 
     let txSig = await web3.sendAndConfirmTransaction(conn, tx, [payer, keypair]);
-    console.log("TxHash: " + txSig);
+    console.log("Confirmed: " + txSig);
 }
 
 let eth = "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw";
