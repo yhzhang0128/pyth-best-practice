@@ -43,7 +43,7 @@ export const invoke = async (loan: string, collateral: string) => {
     }));
 
     let txSig = await web3.sendAndConfirmTransaction(conn, tx, [payer, keypair]);
-    console.log("Confirmed: " + txSig);
+    console.log("Confirmed TxHash: " + txSig);
 }
 
 let eth = "EdVCmQ9FSPcVe5YySXDPCRmc8aDQLKJ9xvYBMZPie1Vw";
